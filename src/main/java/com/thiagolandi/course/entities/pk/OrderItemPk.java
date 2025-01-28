@@ -10,11 +10,14 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-//chave primaria composta (Pk significa chave primaria)
+//Isso diz que a classe OrderItemPk é uma classe incorporável , ou seja, ela será usada como parte de outra classe (normalmente em OrderItem). Não será uma tabela separada no banco de dados, mas seus atributos farão parte da tabela que usa essa chave.
 @Embeddable
 public class OrderItemPk implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	// Ou seja, cada entrada na tabela tb_order_item precisa estar associada a um único pedido e a um único produto, mas o mesmo pedido pode conter vários produtos, e o mesmo produto pode estar associado a vários pedidos.
+	
+	// muitos itens podem ter estar relacionado a um unico order ou product
 	@ManyToOne
 	@JoinColumn(name = "order_id")// cria uma coluna e dá o nome dela
 	private Order order;

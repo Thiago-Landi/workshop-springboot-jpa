@@ -1,5 +1,8 @@
 package com.thiagolandi.course.entities;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thiagolandi.course.entities.pk.OrderItemPk;
 
 import jakarta.persistence.EmbeddedId;
@@ -8,11 +11,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_order_item")
-public class OrderItem {
-
-	//chave primaria
-	@EmbeddedId
-	private OrderItemPk id;
+public class OrderItem implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	//chave primaria composta e sempre que criar uma chave primaria composta, tem que instanciar ela
+	@EmbeddedId 
+	private OrderItemPk id = new OrderItemPk();
 	
 	private Integer quantity;
 	private Double price;
@@ -28,6 +32,7 @@ public class OrderItem {
 		this.price = price;
 	}
 
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}

@@ -25,7 +25,7 @@ public class Category implements Serializable {
 	private Long id;
 	private String name;
 	
-	@JsonIgnore
+	
 	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();// vai ser set pq a mesma categoria não pode ter o mesmo produto mais de uma vez
 	
@@ -54,6 +54,7 @@ public class Category implements Serializable {
 		this.name = name;
 	}
 	
+	@JsonIgnore
 	public Set<Product> getProduct() {
 		return products;
 	}

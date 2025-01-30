@@ -20,6 +20,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable {
@@ -101,6 +102,10 @@ public class Order implements Serializable {
 		return items;
 	}
 
+	public Double getTotal() {
+		return items.stream().mapToDouble(OrderItem::getSubTotal).sum();
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

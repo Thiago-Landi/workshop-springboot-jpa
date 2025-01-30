@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.thiagolandi.course.entities.pk.OrderItemPk;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+@JsonPropertyOrder({ "quantity", "price", "subTotal", "product" }) //essa annotations serve pra definir a ordem que vai ser no postman
 @Entity
 @Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
@@ -65,7 +67,11 @@ public class OrderItem implements Serializable {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-
+	
+	public Double getSubTotal() {
+		return price * quantity;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

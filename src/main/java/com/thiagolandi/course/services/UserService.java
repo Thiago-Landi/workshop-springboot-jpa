@@ -12,6 +12,8 @@ import com.thiagolandi.course.repositories.UserRepository;
 import com.thiagolandi.course.services.exceptions.DatabaseException;
 import com.thiagolandi.course.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 
@@ -44,9 +46,13 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
-		User entity = repository.getReferenceById(id);
-		updateData(entity, obj);// entity é o user do id informado, então vai ser atualizado o entity escolhido pelo o id informado, os novos dados vao vir de obj
-		return repository.save(entity);
+		try {
+			User entity = repository.getReferenceById(id);
+			updateData(entity, obj);//entity é o user do id informado, então vai ser atualizado o entity escolhido pelo o id informado, os novos dados vao vir de obj
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}	
 	}
 	
 	private void updateData(User entity, User obj) {

@@ -32,4 +32,16 @@ public class UserService {
 		repository.deleteById(id);
 	}
 	
+	public User update(Long id, User obj) {
+		User entity = repository.getReferenceById(id);
+		updateData(entity, obj);// entity é o user do id informado, então vai ser atualizado o entity escolhido pelo o id informado, os novos dados vao vir de obj
+		return repository.save(entity);
+	}
+	
+	private void updateData(User entity, User obj) {
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+	}
+	
 }
